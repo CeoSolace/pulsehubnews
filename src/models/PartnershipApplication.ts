@@ -9,3 +9,6 @@ export interface PartnershipApplication extends Document {
   status: 'pending' | 'approved' | 'rejected';
   submittedAt: Date;
 }
+
+const PartnershipApplication = {} as any;
+export default PartnershipApplication;
