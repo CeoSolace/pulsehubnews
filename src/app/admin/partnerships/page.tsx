@@ -1,6 +1,5 @@
 import { connectDB } from '@/lib/db';
 import PartnershipApplication from '@/models/PartnershipApplication';
-import { Button } from '@/components/ui/button';
 
 export default async function PartnershipsPage() {
   await connectDB();
@@ -24,11 +23,11 @@ export default async function PartnershipsPage() {
             <div className="flex justify-between">
               <div>
                 <h3 className="font-bold">{app.organizationName}</h3>
-                <p className="text-gray text-sm">Submitted: {new Date(app.submittedAt).toLocaleString()}</p>
+                <p className="text-gray-500 text-sm">Submitted: {new Date(app.submittedAt).toLocaleString()}</p>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs ${
                 app.status === 'new' 
-                  ? 'bg-blue/10 text-blue' 
+                  ? 'bg-blue-500/10 text-blue-500' 
                   : 'bg-green-500/10 text-green-500'
               }`}>
                 {app.status}
@@ -40,7 +39,7 @@ export default async function PartnershipsPage() {
                 <p><span className="font-medium">Contact:</span> {app.contactName} ({app.contactEmail})</p>
                 <p><span className="font-medium">Type:</span> {app.organizationType}</p>
                 {app.website && (
-                  <p><span className="font-medium">Website:</span> <a href={app.website} className="text-blue hover:underline">{app.website}</a></p>
+                  <p><span className="font-medium">Website:</span> <a href={app.website} className="text-blue-500 hover:underline">{app.website}</a></p>
                 )}
               </div>
               <div>
@@ -48,7 +47,7 @@ export default async function PartnershipsPage() {
                 <p className="mt-1">{app.message}</p>
                 {app.fileUrl && (
                   <p className="mt-2">
-                    <a href={app.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue hover:underline">
+                    <a href={app.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                       View Attachment
                     </a>
                   </p>
@@ -58,14 +57,12 @@ export default async function PartnershipsPage() {
             
             {app.status === 'new' && (
               <div className="mt-4">
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="bg-blue hover:bg-blue/90 text-white"
+                <button
+                  className="px-3 py-1.5 text-sm bg-blue-500 hover:bg-blue-500/90 text-white rounded"
                   onClick={() => handleReview(app._id)}
                 >
                   Mark as Reviewed
-                </Button>
+                </button>
               </div>
             )}
           </div>
