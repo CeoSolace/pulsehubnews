@@ -3,12 +3,6 @@
 import { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CloudinaryImageUploader } from '@/components/CloudinaryImageUploader';
 
 export default function NewArticlePage() {
   const [title, setTitle] = useState('');
@@ -24,7 +18,7 @@ export default function NewArticlePage() {
     content: '<p>Start writing your article...</p>',
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
@@ -54,77 +48,109 @@ export default function NewArticlePage() {
   };
 
   return (
-    <div className="p-6 max-w-4xl">
+    <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">Create New Article</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <Label>Title *</Label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} required />
+            <label className="block text-sm font-medium mb-1">Title *</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
           <div>
-            <Label>Slug *</Label>
-            <Input value={slug} onChange={(e) => setSlug(e.target.value)} required />
+            <label className="block text-sm font-medium mb-1">Slug *</label>
+            <input
+              type="text"
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              required
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
         </div>
         
         <div>
-          <Label>Cover Image *</Label>
-          <CloudinaryImageUploader 
-            value={coverImage} 
-            onChange={setCoverImage} 
-            className="h-48 border border-dashed rounded-lg flex items-center justify-center"
-          />
+          <label className="block text-sm font-medium mb-1">Cover Image *</label>
+          <div className="border border-dashed rounded-lg p-4">
+            {coverImage ? (
+              <img src={coverImage} alt="Cover" className="max-h-48 object-contain mb-2" />
+            ) : (
+              <div className="text-gray-400 text-sm mb-2">No image selected</div>
+            )}
+            <input
+              type="text"
+              placeholder="Paste Cloudinary image URL"
+              value={coverImage}
+              onChange={(e) => setCoverImage(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md text-sm"
+            />
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <Label>Category *</Label>
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="esports">Esports</SelectItem>
-                <SelectItem value="politics">Politics</SelectItem>
-                <SelectItem value="tech">Tech</SelectItem>
-                <SelectItem value="opinion">Opinion</SelectItem>
-              </SelectContent>
-            </Select>
+            <label className="block text-sm font-medium mb-1">Category *</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="esports">Esports</option>
+              <option value="politics">Politics</option>
+              <option value="tech">Tech</option>
+              <option value="opinion">Opinion</option>
+            </select>
           </div>
           <div>
-            <Label>Status *</Label>
-            <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="published">Published</SelectItem>
-              </SelectContent>
-            </Select>
+            <label className="block text-sm font-medium mb-1">Status *</label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
           </div>
         </div>
         
         <div>
-          <Label>Tags (comma separated)</Label>
-          <Input value={tags} onChange={(e) => setTags(e.target.value)} />
+          <label className="block text-sm font-medium mb-1">Tags (comma separated)</label>
+          <input
+            type="text"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
         
         <div>
-          <Label>Content *</Label>
-          <div className="border rounded-md min-h-[300px]">
+          <label className="block text-sm font-medium mb-1">Content *</label>
+          <div className="border rounded-md min-h-[300px] p-2">
             <EditorContent editor={editor} />
           </div>
         </div>
         
         <div className="flex gap-3 justify-end pt-4">
-          <Button type="button" variant="outline" onClick={() => window.history.back()}>
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="px-4 py-2 text-sm font-medium border rounded-md hover:bg-gray-50"
+          >
             Cancel
-          </Button>
-          <Button type="submit" disabled={isSubmitting} className="bg-blue hover:bg-blue/90">
+          </button>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
+          >
             {isSubmitting ? 'Saving...' : 'Save Article'}
-          </Button>
+          </button>
         </div>
       </form>
     </div>
