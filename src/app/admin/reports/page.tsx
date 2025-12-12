@@ -1,6 +1,5 @@
 import { connectDB } from '@/lib/db';
 import Report from '@/models/Report';
-import { Button } from '@/components/ui/button';
 
 export default async function ReportsPage() {
   await connectDB();
@@ -24,7 +23,7 @@ export default async function ReportsPage() {
             <div className="flex justify-between">
               <div>
                 <h3 className="font-bold">{report.articleTitle}</h3>
-                <p className="text-gray text-sm">Submitted: {new Date(report.submittedAt).toLocaleString()}</p>
+                <p className="text-gray-500 text-sm">Submitted: {new Date(report.submittedAt).toLocaleString()}</p>
               </div>
               <span className={`px-2 py-1 rounded-full text-xs ${
                 report.status === 'open' 
@@ -44,14 +43,12 @@ export default async function ReportsPage() {
             
             {report.status === 'open' && (
               <div className="mt-4 flex gap-2">
-                <Button 
-                  size="sm" 
-                  variant="outline" 
-                  className="border-red-500 text-red-500 hover:bg-red-500/10"
+                <button
+                  className="px-3 py-1.5 text-sm border border-red-500 text-red-500 hover:bg-red-500/10 rounded"
                   onClick={() => handleResolve(report._id)}
                 >
                   Mark as Resolved
-                </Button>
+                </button>
               </div>
             )}
           </div>
