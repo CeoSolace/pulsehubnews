@@ -1,3 +1,4 @@
+// src/lib/db.ts
 import { MongoClient, MongoClientOptions } from 'mongodb';
 
 if (!process.env.MONGODB_URI) {
@@ -23,6 +24,10 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   client = new MongoClient(uri, options);
   clientPromise = client.connect();
+}
+
+export async function connectDB() {
+  return clientPromise;
 }
 
 export default clientPromise;
