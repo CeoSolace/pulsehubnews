@@ -1,29 +1,12 @@
-"use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-
-interface CloudinaryImageUploaderProps {
-  value: string;
-  onChange: (url: string) => void;
-  className?: string;
-}
-
-export function CloudinaryImageUploader({ value, onChange, className }: CloudinaryImageUploaderProps) {
-  const [uploading, setUploading] = useState(false);
-
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+export function CloudinaryImageUploader({ value, onChange, className = '' }) {
+  const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading(true);
     const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      onChange(data.url);
-    } finally {
-      setUploading(false);
-    }
+    formData.append('file', file);
+    const res = await fetch('/api/upload', { method: 'POST', body: formData });
+    const data = await res.json();
+    onChange(data.url);
   };
 
   return (
@@ -33,19 +16,16 @@ export function CloudinaryImageUploader({ value, onChange, className }: Cloudina
         accept="image/*"
         onChange={handleFile}
         className="hidden"
-        id="cloudinary-upload"
+        id="uploader"
       />
-      <Button
+      <button
         type="button"
-        onClick={() => document.getElementById("cloudinary-upload")?.click()}
-        disabled={uploading}
-        className="w-full"
+        onClick={() => document.getElementById('uploader')?.click()}
+        className="px-4 py-2 border border-gray rounded w-full"
       >
-        {uploading ? "Uploading..." : value ? "Change Image" : "Upload Image"}
-      </Button>
-      {value && (
-        <img src={value} alt="Preview" className="mt-2 max-h-48 object-contain" />
-      )}
+        {value ? 'Change Image' : 'Upload Image'}
+      </button>
+      {value && <img src={value} alt="Preview" className="mt-2 max-h-48" />}
     </div>
   );
 }
