@@ -1,38 +1,9 @@
-// src/components/ui/button.tsx
-'use client';
-
-import * as React from 'react';
-import { cn } from '@/lib/utils';
-
-type ButtonProps = {
-  children: React.ReactNode;
-  className?: string;
-  variant?: 'default' | 'outline';
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-};
-
-export function Button({
-  children,
-  className = '',
-  variant = 'default',
-  onClick,
-  type = 'button',
-  disabled = false,
-}: ButtonProps) {
+export function Button({ children, className = '', onClick, type = 'button' }) {
   return (
     <button
       type={type}
+      className={`px-4 py-2 bg-blue text-white rounded hover:bg-blue/90 ${className}`}
       onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:opacity-50',
-        variant === 'default'
-          ? 'bg-blue text-white hover:bg-blue/90 px-4 py-2'
-          : 'border border-gray text-gray hover:bg-gray/10 px-4 py-2',
-        className
-      )}
     >
       {children}
     </button>
