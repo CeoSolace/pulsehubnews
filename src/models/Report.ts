@@ -8,3 +8,6 @@ export interface Report extends Document {
   status: 'pending' | 'reviewed' | 'resolved';
   createdAt: Date;
 }
+
+const Report = {} as any;
+export default Report;
