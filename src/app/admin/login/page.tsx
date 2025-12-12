@@ -29,7 +29,7 @@ export default function AdminLogin() {
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -39,13 +39,13 @@ export default function AdminLogin() {
               id="password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               required
             />
           </div>
           <Button 
             type="submit" 
-            className="w-full bg-blue hover:bg-blue/90" 
+            className="w-full bg-blue-500 hover:bg-blue-500/90" 
             disabled={isLoading}
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
