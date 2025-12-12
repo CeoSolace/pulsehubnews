@@ -1,8 +1,10 @@
+// src/components/ui/input.tsx
 export function Input({ className = '', ...props }) {
   return (
     <input
-      className={`px-3 py-2 border border-gray rounded w-full ${className}`}
+      className={`px-3 py-2 border border-gray-300 rounded w-full ${className}`}
       {...props}
     />
   );
 }
+
