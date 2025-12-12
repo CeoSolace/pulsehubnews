@@ -1,19 +1,18 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
+// src/components/ui/label.tsx
+'use client';
 
-export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
-const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <label
-        ref={ref}
-        className={cn("text-sm font-medium", className)}
-        {...props}
-      />
-    );
-  }
-);
-Label.displayName = "Label";
+type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement>;
 
-export { Label };
+export function Label({ className, children, ...props }: LabelProps) {
+  return (
+    <label
+      className={cn('block text-sm font-medium mb-1.5', className)}
+      {...props}
+    >
+      {children}
+    </label>
+  );
+}
