@@ -1,3 +1,4 @@
+// src/app/[category]/page.tsx
 import { connectDB } from '@/lib/db';
 import Article from '@/models/Article';
 import { ArticleCard } from '@/components/ArticleCard';
@@ -30,10 +31,9 @@ export default async function CategoryPage({ params }: { params: { category: str
     category: params.category, 
     status: 'published' 
   })
-  .populate('author')
   .sort({ createdAt: -1 })
   .limit(20);
-  
+
   const categoryTitles: Record<string, string> = {
     esports: 'Global Esports',
     politics: 'UK Politics',
@@ -42,23 +42,23 @@ export default async function CategoryPage({ params }: { params: { category: str
   };
   
   return (
-    <div className="container py-12">
+    <div className="container mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold mb-8">{categoryTitles[params.category]}</h1>
       {articles.length === 0 ? (
-        <p className="text-center text-gray py-12">No articles found in this category.</p>
+        <p className="text-center text-gray-500 py-12">No articles found in this category.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {articles.map((article: any) => (
             <ArticleCard
-              key={article.slug}
-              slug={article.slug}
+              key={article._id}
+              href={`/article/${article.slug}`}
               title={article.title}
-              excerpt={article.content?.[0]?.text?.substring(0, 120) || ''}
+              excerpt={article.excerpt || (article.content?.[0]?.text?.substring(0, 120) || 'No excerpt available')}
               coverImage={article.coverImage}
               category={article.category}
-              tags={article.tags}
+              tags={article.tags || []}
               author={article.author?.name || 'Unknown'}
-              publishedAt={article.createdAt}
+              publishedAt={article.publishedAt || article.createdAt}
             />
           ))}
         </div>
