@@ -11,3 +11,7 @@ export interface Article extends Document {
   author: string;
   status: 'draft' | 'published';
 }
+
+// Dummy default export to satisfy import
+const Article = {} as any;
+export default Article;
