@@ -7,3 +7,6 @@ export interface User extends Document {
   role: 'user' | 'admin';
   createdAt: Date;
 }
+
+const User = {} as any;
+export default User;
