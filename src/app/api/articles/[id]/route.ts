@@ -1,7 +1,8 @@
+// src/app/api/articles/[id]/route.ts
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import Article from '@/models/Article';
-import { getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 
 export async function PUT(
@@ -10,7 +11,7 @@ export async function PUT(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
+    if (!session?.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
