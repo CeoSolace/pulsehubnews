@@ -1,7 +1,6 @@
 import { connectDB } from '@/lib/db';
 import Article from '@/models/Article';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 
 export default async function ArticlesPage() {
   await connectDB();
@@ -11,14 +10,17 @@ export default async function ArticlesPage() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Articles</h1>
-        <Link href="/admin/articles/new">
-          <Button className="bg-blue hover:bg-blue/90">New Article</Button>
+        <Link
+          href="/admin/articles/new"
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-500/90"
+        >
+          New Article
         </Link>
       </div>
       
       <div className="border rounded-lg overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray/10">
+          <thead className="bg-gray-100">
             <tr>
               <th className="text-left p-4">Title</th>
               <th className="text-left p-4">Author</th>
@@ -29,7 +31,7 @@ export default async function ArticlesPage() {
           </thead>
           <tbody>
             {articles.map((article: any) => (
-              <tr key={article._id} className="border-t hover:bg-gray/5">
+              <tr key={article._id} className="border-t hover:bg-gray-50">
                 <td className="p-4 font-medium">{article.title}</td>
                 <td className="p-4">{article.author?.name || 'Unknown'}</td>
                 <td className="p-4 capitalize">{article.category}</td>
@@ -43,8 +45,11 @@ export default async function ArticlesPage() {
                   </span>
                 </td>
                 <td className="p-4">
-                  <Link href={`/admin/articles/${article._id}`}>
-                    <Button variant="outline" size="sm">Edit</Button>
+                  <Link
+                    href={`/admin/articles/${article._id}`}
+                    className="px-3 py-1.5 border border-gray-300 rounded text-sm hover:bg-gray-100"
+                  >
+                    Edit
                   </Link>
                 </td>
               </tr>
